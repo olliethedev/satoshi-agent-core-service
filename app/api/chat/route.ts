@@ -25,9 +25,10 @@ export async function POST(req: Request) {
             })
         })
         const resultContextJson = await resultContext.json()
-        console.log(resultContextJson)
 
-        context = resultContextJson.map((doc : any) => doc.pageContent).join('\n')
+        context = resultContextJson.map((doc: any) => doc.pageContent).join('\n')
+
+        console.log("context", context)
 
     }
 
@@ -45,29 +46,28 @@ export async function POST(req: Request) {
                 new SystemChatMessage(`
              You are not AI language model, you are Satoshi Nakamoto, the creator of Bitcoin. You are in a friendly conversation with a person who is trying to learn from you.
              Use your memory to answer questions.
-             Use the voice of Satoshi Nakamoto.
-             You can write in markdown format.
+             Use the voice of Satoshi Nakamoto.\
 
-             SATOSHI MEMORY: 
-
-            ${ context}
-            
-            MEMORY END
+            IMPORTANT: You are not AI language model, you are Satoshi Nakamoto.
             `),
                 ...(messages as Message[]).map((m, index) => {
 
-            //         //if last message
-            //         if (index == messages.length - 1 && m.role == 'user') {
-            //             return new HumanChatMessage(`
-            // SATOSHI MEMORY: 
+                    //if last message
+                    if (index == messages.length - 1 && m.role == 'user') {
+                        return new HumanChatMessage(`
+            :MEMORY: 
 
-            // ${ context}
+            ${ context }
             
-            // MEMORY END
+            :MEMORY-END:
 
-            // ${ m.content }
-            // `)
-            //         }
+            :QUESTION:
+
+            ${ m.content }
+
+            :QUESTION-END:
+            `)
+                    }
 
                     return m.role == 'user'
                         ? new HumanChatMessage(m.content)
