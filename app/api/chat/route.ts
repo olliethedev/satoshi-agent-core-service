@@ -33,6 +33,7 @@ export async function POST(req: Request) {
     const { stream, handlers } = LangChainStream()
 
     const llm = new ChatOpenAI({
+        modelName: 'gpt-3.5-turbo',
         streaming: true,
         callbacks: [handlers]
     })
