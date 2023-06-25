@@ -17,7 +17,8 @@ export async function POST(req: Request) {
         const resultContext = await fetch((process.env as any).VECTOR_DB_SERVICE, {
             method: "POST",
             headers: {
-                "Content-Type": "application/json"
+                "Content-Type": "application/json",
+                "X-Admin-Key": (process.env as any).VECTOR_DB_ADMIN_KEY
             },
             body: JSON.stringify({
                 prompt: lastMessage.content
