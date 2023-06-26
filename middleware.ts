@@ -5,7 +5,7 @@ import { generateToken, isValidPreimage } from '@/utils';
 const RECIPIENT = process.env.RECIPIENT as any;
 const PRICE_IN_SATS = 10;
 
-// This function can be marked `async` if using `await` inside
+// This function is the paywall middleware
 export async function middleware(request: NextRequest) {
     const requestHeaders = new Headers(request.headers)
     const authHeader = requestHeaders.get('Authorization')

@@ -10,16 +10,10 @@ export async function fetchWithLsat(input: RequestInfo, init?: RequestInit): Pro
     // If the www-authenticate header is missing, proceed with a normal fetch.
     if (!header) {
       const json = await response.json();
-      console.log('Response:', json);
       return json;
     }
 
     const lsat = Lsat.fromHeader(header);
-
-    // show some information about the lsat
-    console.log(lsat.invoice);
-    console.log(lsat.baseMacaroon);
-    console.log(lsat.paymentHash);
 
     // after the invoice is paid, you can add the preimage
     const preimage = await payInvoice(lsat.invoice);
@@ -35,7 +29,6 @@ export async function fetchWithLsat(input: RequestInfo, init?: RequestInit): Pro
 
     const json = await response.json();
 
-    console.log('With valid LSAT, we should get a response:', json);
     return json;
   } catch (e) {
     console.error(e);

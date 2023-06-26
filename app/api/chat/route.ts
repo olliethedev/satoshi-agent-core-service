@@ -8,7 +8,6 @@ export const runtime = 'edge'
 
 export async function POST(req: Request) {
 
-    console.log("got request")
     const { messages } = await req.json()
 
     const lastMessage = messages[messages.length - 1];
@@ -21,7 +20,7 @@ export async function POST(req: Request) {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
-                "X-Admin-Key": (process.env as any).VECTOR_DB_ADMIN_KEY
+                "X-Admin-Key": (process.env as any).VECTOR_DB_ADMIN_KEY // using admin key to bypass paywall since vector db is also our own service
             },
             body: JSON.stringify({
                 prompt: lastMessage.content
@@ -30,8 +29,6 @@ export async function POST(req: Request) {
         const resultContextJson = await resultContext.json()
 
         context = resultContextJson.map((doc: any) => doc.pageContent).join('\n')
-
-        console.log("context", context)
 
     }
 
@@ -82,7 +79,6 @@ export async function POST(req: Request) {
         )
         .catch(console.error)
 
-    console.log("returning response")
     return new StreamingTextResponse(stream, {
         headers: {
             "Access-Control-Allow-Origin": "*",

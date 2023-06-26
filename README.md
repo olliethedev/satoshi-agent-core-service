@@ -1,3 +1,9 @@
+# Satoshi Agent Core service
+
+This is the core service for [Satoshi Agent](https://www.satoshiagent.com/). It is a Next.js app that runs on the server and provides the API that is paywalled by lightning payments.
+This servicie uses the [satoshi-agent-vector-db](https://github.com/olliethedev/satoshi-agent-vector-db) that is also behind a lightning paywall. 
+This service uses langchain to orchestrate message inputs, semantically similar data from the vector db, and the output of the message.
+
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Getting Started
